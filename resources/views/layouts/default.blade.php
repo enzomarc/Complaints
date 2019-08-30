@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="assets/css/neon-forms.css">
     <link rel="stylesheet" href="assets/css/custom.css">
 
+    @yield('css')
+
     <script src="assets/js/jquery-1.11.3.min.js"></script>
 
     <!--[if lt IE 9]>
@@ -84,7 +86,7 @@
                 <!-- Administrator menus -->
                 @if($user->type == 2)
                     <li>
-                        <a href="{{ route('dashboard') }}">
+                        <a href="{{ route('investigators.index') }}">
                             <i class="entypo-users"></i>
                             <span class="title">Enquêteurs</span>
                         </a>
@@ -98,14 +100,14 @@
                     </li>
                 @endif
 
-                <!-- Investigator menus -->
+            <!-- Investigator menus -->
                 @if($user->type == 1)
 
 
 
                 @endif
 
-                <!-- User menus -->
+            <!-- User menus -->
                 @if($user->type == 0)
 
 
@@ -195,7 +197,8 @@
                 <ul class="user-info pull-left pull-none-xsm">
 
                     <!-- Profile Info -->
-                    <li class="profile-info dropdown"><!-- add class "pull-right" if you want to place this from right -->
+                    <li class="profile-info dropdown">
+                        <!-- add class "pull-right" if you want to place this from right -->
 
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{{ $user->avatar }}" alt="" class="img-circle" width="44">
@@ -240,7 +243,8 @@
                     <!-- Raw Notifications -->
                     <li class="notifications dropdown">
 
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                           data-close-others="true">
                             <i class="entypo-attention"></i>
                             <span class="badge badge-info">6</span>
                         </a>
@@ -254,7 +258,8 @@
                             </li>
 
                             <li>
-                                <ul class="dropdown-menu-list scroller" tabindex="5001" style="overflow: hidden; outline: none;">
+                                <ul class="dropdown-menu-list scroller" tabindex="5001"
+                                    style="overflow: hidden; outline: none;">
                                     <li class="unread notification-success">
                                         <a href="#">
                                             <i class="entypo-user-add pull-right"></i>
@@ -344,14 +349,23 @@
                             <li class="external">
                                 <a href="#">Voir toutes les notifications</a>
                             </li>
-                            <div id="ascrail2001" class="nicescroll-rails" style="padding-right: 3px; width: 10px; z-index: 1000; cursor: default; position: absolute; top: 0px; left: -10px; height: 0px; display: none;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div></div><div id="ascrail2001-hr" class="nicescroll-rails" style="height: 7px; z-index: 1000; top: -7px; left: 0px; position: absolute; cursor: default; display: none;"><div style="position: relative; top: 0px; height: 5px; width: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div></div></ul>
+                            <div id="ascrail2001" class="nicescroll-rails"
+                                 style="padding-right: 3px; width: 10px; z-index: 1000; cursor: default; position: absolute; top: 0px; left: -10px; height: 0px; display: none;">
+                                <div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div>
+                            </div>
+                            <div id="ascrail2001-hr" class="nicescroll-rails"
+                                 style="height: 7px; z-index: 1000; top: -7px; left: 0px; position: absolute; cursor: default; display: none;">
+                                <div style="position: relative; top: 0px; height: 5px; width: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div>
+                            </div>
+                        </ul>
 
                     </li>
 
                     <!-- Message Notifications -->
                     <li class="notifications dropdown">
 
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                           data-close-others="true">
                             <i class="entypo-mail"></i>
                             <span class="badge badge-secondary">10</span>
                         </a>
@@ -366,11 +380,13 @@
 
                                 </form>
 
-                                <ul class="dropdown-menu-list scroller" tabindex="5002" style="overflow: hidden; outline: none;">
+                                <ul class="dropdown-menu-list scroller" tabindex="5002"
+                                    style="overflow: hidden; outline: none;">
                                     <li class="active">
                                         <a href="#">
 											<span class="image pull-right">
-												<img src="assets/images/thumb-1@2x.png" width="44" alt="" class="img-circle">
+												<img src="assets/images/thumb-1@2x.png" width="44" alt=""
+                                                     class="img-circle">
 											</span>
 
                                             <span class="line">
@@ -387,7 +403,8 @@
                                     <li class="active">
                                         <a href="#">
 											<span class="image pull-right">
-												<img src="assets/images/thumb-2@2x.png" width="44" alt="" class="img-circle">
+												<img src="assets/images/thumb-2@2x.png" width="44" alt=""
+                                                     class="img-circle">
 											</span>
 
                                             <span class="line">
@@ -404,7 +421,8 @@
                                     <li>
                                         <a href="#">
 											<span class="image pull-right">
-												<img src="assets/images/thumb-3@2x.png" width="44" alt="" class="img-circle">
+												<img src="assets/images/thumb-3@2x.png" width="44" alt=""
+                                                     class="img-circle">
 											</span>
 
                                             <span class="line">
@@ -421,7 +439,8 @@
                                     <li>
                                         <a href="#">
 											<span class="image pull-right">
-												<img src="assets/images/thumb-4@2x.png" width="44" alt="" class="img-circle">
+												<img src="assets/images/thumb-4@2x.png" width="44" alt=""
+                                                     class="img-circle">
 											</span>
 
                                             <span class="line">
@@ -440,15 +459,24 @@
                             <li class="external">
                                 <a href="mailbox.html">Tous les Messages</a>
                             </li>
-                            <div id="ascrail2002" class="nicescroll-rails" style="padding-right: 3px; width: 10px; z-index: 1000; cursor: default; position: absolute; top: 0px; left: -10px; height: 0px; display: none;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div></div><div id="ascrail2002-hr" class="nicescroll-rails" style="height: 7px; z-index: 1000; top: -7px; left: 0px; position: absolute; cursor: default; display: none;"><div style="position: relative; top: 0px; height: 5px; width: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div></div></ul>
+                            <div id="ascrail2002" class="nicescroll-rails"
+                                 style="padding-right: 3px; width: 10px; z-index: 1000; cursor: default; position: absolute; top: 0px; left: -10px; height: 0px; display: none;">
+                                <div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div>
+                            </div>
+                            <div id="ascrail2002-hr" class="nicescroll-rails"
+                                 style="height: 7px; z-index: 1000; top: -7px; left: 0px; position: absolute; cursor: default; display: none;">
+                                <div style="position: relative; top: 0px; height: 5px; width: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div>
+                            </div>
+                        </ul>
 
                     </li>
 
-                    @if ($user->type == 1)
-                        <!-- Task Notifications -->
+                @if ($user->type == 1)
+                    <!-- Task Notifications -->
                         <li class="notifications dropdown">
 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                               data-close-others="true">
                                 <i class="entypo-list"></i>
                                 <span class="badge badge-warning">1</span>
                             </a>
@@ -459,7 +487,8 @@
                                 </li>
 
                                 <li>
-                                    <ul class="dropdown-menu-list scroller" tabindex="5003" style="overflow: hidden; outline: none;">
+                                    <ul class="dropdown-menu-list scroller" tabindex="5003"
+                                        style="overflow: hidden; outline: none;">
                                         <li>
                                             <a href="#">
                                                 <span class="task">
@@ -538,7 +567,8 @@
                                                 </span>
 
                                                 <span class="progress progress-striped">
-                                                    <span style="width: 17%;" class="progress-bar progress-bar-important">
+                                                    <span style="width: 17%;"
+                                                          class="progress-bar progress-bar-important">
                                                         <span class="sr-only">17% Complete</span>
                                                     </span>
                                                 </span>
@@ -550,7 +580,15 @@
                                 <li class="external">
                                     <a href="#">Voir toutes mes enquêtes</a>
                                 </li>
-                                <div id="ascrail2003" class="nicescroll-rails" style="padding-right: 3px; width: 10px; z-index: 1000; cursor: default; position: absolute; top: 0px; left: -10px; height: 0px; display: none;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div></div><div id="ascrail2003-hr" class="nicescroll-rails" style="height: 7px; z-index: 1000; top: -7px; left: 0px; position: absolute; cursor: default; display: none;"><div style="position: relative; top: 0px; height: 5px; width: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div></div></ul>
+                                <div id="ascrail2003" class="nicescroll-rails"
+                                     style="padding-right: 3px; width: 10px; z-index: 1000; cursor: default; position: absolute; top: 0px; left: -10px; height: 0px; display: none;">
+                                    <div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div>
+                                </div>
+                                <div id="ascrail2003-hr" class="nicescroll-rails"
+                                     style="height: 7px; z-index: 1000; top: -7px; left: 0px; position: absolute; cursor: default; display: none;">
+                                    <div style="position: relative; top: 0px; height: 5px; width: 0px; background-color: rgb(212, 212, 212); border: 1px solid rgb(204, 204, 204); background-clip: padding-box; border-radius: 1px;"></div>
+                                </div>
+                            </ul>
 
                         </li>
                     @endif
@@ -627,6 +665,8 @@
 
 <!-- Demo Settings -->
 <script src="assets/js/neon-demo.js"></script>
+
+@yield('script')
 
 </body>
 </html>

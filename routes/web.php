@@ -32,4 +32,6 @@ Route::group(['middleware' => 'auth'], function () {
 	
 	Route::get('/', 'UserController@dashboard')->name('dashboard');
 	
+	Route::resource('investigators', 'InvestigatorController');
+	
 });
