@@ -196,7 +196,7 @@
                 toastr.success(data.message, 'Connexion réussie');
                 setTimeout(() => {
                     window.location.replace("{{ route('dashboard') }}")
-                }, 4000);
+                }, 3000);
             },
             error: function (data) {
                 console.log(data);

@@ -16,6 +16,15 @@
 			if (!auth()->check())
 				return redirect()->route('login');
 			
-			return view('dashboard');
+			$user = auth()->user();
+			
+			if ($user->type == 0)
+				return view('user.dashboard', compact('user'));
+			elseif ($user->type == 1)
+				return view('investigator.dashboard', compact('user'));
+			elseif ($user->type == 2)
+				return view('administrator.dashboard', compact('user'));
+			else
+				return response("No dashboard available for this user.", 404);
 		}
 	}
