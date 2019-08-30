@@ -19,11 +19,11 @@
 				$table->string('last_name')->nullable();
 				$table->timestamp('date_of_birth');
 				$table->string('birthplace');
-				$table->char('gender');
-				$table->string('phone')->unique();
+				$table->char('gender', 1);
+				$table->string('phone', 13)->unique();
 				$table->string('password');
 				$table->integer('type')->default(0);
-				$table->boolean('active')->default(false);
+				$table->boolean('active')->default(true);
 				$table->timestamps();
 			});
 		}

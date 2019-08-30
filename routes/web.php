@@ -11,6 +11,25 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+use Illuminate\Support\Facades\Route;
+
+// Authentication routes
+
+Route::get('login', 'Auth\LoginController@login')->name('login');
+
+Route::post('login', 'Auth\LoginController@auth')->name('login.auth');
+
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::get('register', 'Auth\RegisterController@register')->name('register');
+
+Route::post('register', 'Auth\RegisterController@create')->name('register.create');
+
+
+// Common routes
+
+Route::group(['middleware' => 'auth'], function () {
+	
+	Route::get('/', 'UserController@dashboard')->name('dashboard');
+	
 });
