@@ -23,6 +23,7 @@
 				$table->string('phone')->unique();
 				$table->string('password');
 				$table->integer('type')->default(0);
+				$table->boolean('active')->default(false);
 				$table->timestamps();
 			});
 		}
