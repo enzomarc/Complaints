@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content="Neon Admin Panel"/>
-    <meta name="author" content=""/>
+    <meta name="author" content="emarc237@gmail.com"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <link rel="icon" href="assets/images/favicon.ico">
 
@@ -649,6 +650,14 @@
 
 </div>
 
+<!-- Add CSRF Token to AJAX -->
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 
 <!-- Bottom scripts (common) -->
 <script src="assets/js/gsap/TweenMax.min.js"></script>
