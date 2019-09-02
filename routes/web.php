@@ -32,8 +32,13 @@ Route::group(['middleware' => 'auth'], function () {
 	
 	Route::get('/', 'UserController@dashboard')->name('dashboard');
 	
-	Route::resource('investigators', 'InvestigatorController');
-	
-	Route::resource('unities', 'UnityController');
+	// Admin routes
+	Route::group(['middleware' => 'admin'], function () {
+		
+		Route::resource('investigators', 'InvestigatorController');
+		
+		Route::resource('unities', 'UnityController');
+		
+	});
 	
 });
