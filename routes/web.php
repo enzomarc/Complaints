@@ -34,4 +34,6 @@ Route::group(['middleware' => 'auth'], function () {
 	
 	Route::resource('investigators', 'InvestigatorController');
 	
+	Route::resource('unities', 'UnityController');
+	
 });

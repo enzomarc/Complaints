@@ -94,7 +94,7 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('dashboard') }}">
+                        <a href="{{ route('unities.index') }}">
                             <i class="entypo-flag"></i>
                             <span class="title">Unités</span>
                         </a>

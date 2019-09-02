@@ -21,6 +21,12 @@
 			$unities = Unity::all();
 			$user = auth()->user();
 			
+			// Load investigators unities
+			$investigators->transform(function (User $user) {
+				$user->unity = Unity::find($user->unity);
+				return $user;
+			});
+			
 			return view('investigator.index', compact('investigators', 'user', 'unities'));
 		}
 		
@@ -106,7 +112,6 @@
 		{
 			try {
 				$investigator = User::findOrFail($id);
-				return response()->json(['message' => 'Data is here!', 'data' => $request->input()]);
 				
 				$data = $request->except('_token');
 				$investigator->update($data);

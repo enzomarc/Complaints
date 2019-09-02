@@ -24,6 +24,7 @@
             <th>Date de naissance</th>
             <th>Lieu de naissance</th>
             <th>Numéro de téléphone</th>
+            <th>Unité</th>
             <th>Genre</th>
             <th></th>
         </tr>
@@ -33,9 +34,10 @@
             <tr>
                 <td>{{ $investigator->id }}</td>
                 <td>{{ $investigator->first_name . ' ' .$investigator->last_name }}</td>
-                <td>{{ $investigator->date_of_birth }}</td>
+                <td>{{ date('d/m/Y', strtotime($investigator->date_of_birth)) }}</td>
                 <td>{{ $investigator->birthplace }}</td>
                 <td>{{ $investigator->phone }}</td>
+                <td>{{ $investigator->unity != null ? $investigator->unity->name : 'Non définie' }}</td>
                 <td>{{ $investigator->gender == 'M' ? 'Homme' : 'Femme' }}</td>
                 <td>
                     <div class="btn-group">
@@ -357,8 +359,6 @@
                 url: '/investigators/' + investigator,
                 method: "PUT",
                 data: data,
-                processData: false,
-                contentType: false,
                 success: function (data) {
                     console.log(data);
                     toastr.success(data.message, 'Enquêteur modifié');

@@ -16,7 +16,7 @@
 		 * @var array
 		 */
 		protected $fillable = [
-			'first_name', 'last_name', 'date_of_birth', 'birthplace', 'gender', 'phone', 'password', 'type', 'active'
+			'first_name', 'last_name', 'date_of_birth', 'birthplace', 'gender', 'phone', 'password', 'type', 'active', 'unity'
 		];
 		
 		/**
@@ -36,4 +36,14 @@
 		protected $casts = [
 			'active' => 'boolean',
 		];
+		
+		/**
+		 * Get the user unity.
+		 *
+		 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+		 */
+		public function unity()
+		{
+			return $this->belongsTo(Unity::class, 'unity');
+		}
 	}
