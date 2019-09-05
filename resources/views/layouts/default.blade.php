@@ -103,9 +103,17 @@
 
             <!-- Investigator menus -->
                 @if($user->type == 1)
+                    <li>
+                        <a href="{{ route('complaints.index') }}">
+                            <i class="entypo-box"></i>
+                            <span class="title">Plaintes</span>
+                        </a>
 
-
-
+                        <a href="{{ route('investigations.index') }}">
+                            <i class="entypo-folder"></i>
+                            <span class="title">Enquêtes</span>
+                        </a>
+                    </li>
                 @endif
 
             <!-- User menus -->

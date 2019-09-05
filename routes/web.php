@@ -41,4 +41,8 @@ Route::group(['middleware' => 'auth'], function () {
 		
 	});
 	
+	Route::resource('complaints', 'ComplaintController');
+	
+	Route::resource('investigations', 'InvestigationController');
+	
 });
