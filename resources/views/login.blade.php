@@ -113,9 +113,9 @@
 
                 <div class="form-group">
 
-                    <button type="button" class="btn btn-default btn-lg btn-block btn-icon icon-left facebook-button">
-                        Créer un compte
-                        <i class="entypo-user-add"></i>
+                    <button type="button" id="create-button" class="btn btn-info btn-lg btn-block btn-icon icon-left google-button">
+                        Je veux porter plainte
+                        <i class="entypo-archive"></i>
                     </button>
 
                 </div>
@@ -203,6 +203,10 @@
                 toastr.error(data.responseJSON.message, 'Erreur');
             }
         });
+    });
+
+    $('#create-button').click(function () {
+        window.location.replace("{{ route('create.complaint') }}");
     });
 </script>
 

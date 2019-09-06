@@ -14,4 +14,14 @@ class Complaint extends Model
 	protected $fillable = [
 		'author', 'description', 'suspect'
 	];
+	
+	/**
+	 * Get the complaint author.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function author()
+	{
+		return $this->belongsTo(User::class, 'author');
+	}
 }

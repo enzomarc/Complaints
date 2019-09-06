@@ -25,6 +25,11 @@ Route::get('register', 'Auth\RegisterController@register')->name('register');
 
 Route::post('register', 'Auth\RegisterController@create')->name('register.create');
 
+Route::get('complaint/create', 'ComplaintController@create')->name('create.complaint');
+
+Route::resource('complaints', 'ComplaintController');
+
+
 
 // Common routes
 
@@ -40,8 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::resource('unities', 'UnityController');
 		
 	});
-	
-	Route::resource('complaints', 'ComplaintController');
 	
 	Route::resource('investigations', 'InvestigationController');
 	

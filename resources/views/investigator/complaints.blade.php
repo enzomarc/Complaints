@@ -28,11 +28,15 @@
             @foreach($complaints as $complaint)
                 <tr>
                     <td>{{ $complaint->id }}</td>
-                    <td>{{ $complaint->author }}</td>
+                    <td>{{ $complaint->author->first_name . ' ' . $complaint->author->last_name }}</td>
                     <td>{{ $complaint->suspect }}</td>
                     <td>{{ date('d/m/Y', strtotime($complaint->created_at)) }}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm open-investigation"><i class="entypo-folder"></i> Ouvrir une enquête</button>
+                        @if(!$complaint->investigated)
+                            <button class="btn btn-primary btn-sm open-investigation" data-complaint="{{ $complaint->id }}"><i class="entypo-folder"></i> Ouvrir une enquête</button>
+                        @else
+                            <div class="label label-info">Une enquête est ouverte</div>
+                        @endif
                     </td>
                 </tr>
             @endforeach
@@ -62,13 +66,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="start_date">Date d'ouverture de la plainte</label>
+                                    <label for="start_date">Date d'ouverture de l'enquête</label>
                                     <input type="date" name="start_date" id="start_date" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="end_date">Date de fermeture de la plainte</label>
+                                    <label for="end_date">Date de fermeture de l'enquête</label>
                                     <input type="date" name="end_date" id="end_date" class="form-control" required>
                                 </div>
                             </div>
@@ -116,19 +120,29 @@
 
         initialize();
 
+        $('.open-investigation').click(function () {
+            const complaint = $(this)[0].dataset['complaint'];
+            $('#complaint').val(complaint);
+
+            $('#add_modal').modal('show');
+        });
+
         $('#create_form').submit(function (e) {
             e.preventDefault();
             e.stopPropagation();
 
-            const name = $('#name').val();
+            const complaint = $('#complaint').val();
+            const reason = $('#reason').val();
+            const start_date = $('#start_date').val();
+            const end_date = $('#end_date').val();
 
             $.ajax({
-                url: "{{ route('unities.store') }}",
+                url: "{{ route('investigations.store') }}",
                 method: "POST",
-                data: { name: name, _token: "{{ csrf_token() }}" },
+                data: { complaint: complaint, reason: reason, start_date: start_date, end_date: end_date, _token: "{{ csrf_token() }}" },
                 success: function (data) {
-                    toastr.success(data.message, 'Unité ajoutée');
-                    // initialize();
+                    toastr.success(data.message, 'Nouvelle enquête ouverte');
+                    $('#add_modal').modal('hide');
                 },
                 error: function (data) {
                     toastr.error(data.responseJSON.message, 'Erreur');
