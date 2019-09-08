@@ -14,7 +14,6 @@
 use Illuminate\Support\Facades\Route;
 
 // Authentication routes
-
 Route::get('login', 'Auth\LoginController@login')->name('login');
 
 Route::post('login', 'Auth\LoginController@auth')->name('login.auth');
@@ -27,12 +26,12 @@ Route::post('register', 'Auth\RegisterController@create')->name('register.create
 
 Route::get('complaint/create', 'ComplaintController@create')->name('create.complaint');
 
+Route::get('users/{user}', 'UserController@show')->name('users.show');
+
 Route::resource('complaints', 'ComplaintController');
 
 
-
 // Common routes
-
 Route::group(['middleware' => 'auth'], function () {
 	
 	Route::get('/', 'UserController@dashboard')->name('dashboard');
@@ -47,5 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 	
 	Route::resource('investigations', 'InvestigationController');
+	
+	Route::resource('messages', 'MessageController');
 	
 });

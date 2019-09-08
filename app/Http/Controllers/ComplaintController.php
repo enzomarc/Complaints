@@ -121,6 +121,9 @@
 		 */
 		public function show(Complaint $complaint)
 		{
+			$complaint->author = User::find($complaint->author);
+			$complaint->date = date('d/m/Y', strtotime($complaint->created_at));
+			
 			return response()->json(['complaint' => $complaint]);
 		}
 		

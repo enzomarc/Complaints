@@ -19,6 +19,7 @@
         <tr>
             <th>#</th>
             <th>Auteur de la plainte</th>
+            <th>Numéro de téléphone</th>
             <th>Nom du suspect</th>
             <th>Déposée le</th>
             <th></th>
@@ -29,6 +30,7 @@
                 <tr>
                     <td>{{ $complaint->id }}</td>
                     <td>{{ $complaint->author->first_name . ' ' . $complaint->author->last_name }}</td>
+                    <td>{{ $complaint->author->phone }}</td>
                     <td>{{ $complaint->suspect }}</td>
                     <td>{{ date('d/m/Y', strtotime($complaint->created_at)) }}</td>
                     <td>
@@ -37,6 +39,7 @@
                         @else
                             <div class="label label-info">Une enquête est ouverte</div>
                         @endif
+                        <button class="btn btn-primary btn-sm send-message" data-user="{{ $complaint->author->id }}"><i class="entypo-paper-plane"></i> Envoyer un message</button>
                     </td>
                 </tr>
             @endforeach
@@ -81,6 +84,39 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="entypo-cancel"></i>Fermer</button>
                         <button type="submit" class="btn btn-success"><i class="entypo-floppy"></i>Ouvrir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send message modal -->
+    <div class="modal fade" id="message_modal" style="display: none">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Envoyer un message</h4>
+                </div>
+                <form role="form" id="message_form" method="POST">
+                    <input type="hidden" name="to" id="message_to">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="content" class="control-label">Message: </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <textarea class="form-control" name="content" id="content" cols="30" rows="10" style="height: 300px" placeholder="Contenu du message ici..." required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="entypo-cancel"></i>Fermer</button>
+                        <button type="submit" class="btn btn-success"><i class="entypo-paper-plane"></i>Envoyer</button>
                     </div>
                 </form>
             </div>
@@ -207,6 +243,47 @@
                 error: function (data) {
                     toastr.error(data.responseJSON.message, 'Erreur');
                     console.log(data);
+                }
+            });
+        });
+
+        $('.send-message').click(function () {
+            const user = $(this)[0].dataset['user'];
+
+            $.ajax({
+                url: '/users/' + user,
+                method: 'GET',
+                data: { _token: "{{ csrf_token() }}" },
+                success: function (data) {
+                    $('#message_to').val(data.user.id);
+                    $('#message_modal .modal-title').empty().append('Envoyer un message à ' + data.user.first_name + ' ' + data.user.last_name);
+                    $('#message_modal').modal('show');
+                },
+                error: function (data) {
+                    console.log(data);
+                    toastr.error("Impossible d'envoyer un message à cet utilisateur.", 'Erreur');
+                }
+            });
+        });
+
+        $('#message_form').submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const to = $('#message_to').val();
+            const content = $('#content').val();
+
+            $.ajax({
+                url: "{{ route('messages.store') }}",
+                method: "POST",
+                data: { to: to, content: content, _token: "{{ csrf_token() }}" },
+                success: function (data) {
+                    toastr.success(data.message, 'Message envoyé');
+                    $('#message_modal').modal('hide');
+                },
+                error: function (data) {
+                    console.log(data);
+                    toastr.error(data.responseJSON.message, 'Erreur');
                 }
             });
         });

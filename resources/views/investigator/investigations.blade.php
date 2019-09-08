@@ -45,8 +45,10 @@
                     </td>
                     <td>
                         <div class="btn-group">
-                            <button data-investigation="{{ $investigation->id }}" class="btn btn-primary btn-sm show-investigation"><i class="entypo-eye"></i> Voir la plainte</button>
-                            <button type="button" data-url="{{ route('investigations.destroy', ['investigation' => $investigation]) }}" class="btn btn-red btn-sm close-investigation"><i class="entypo-cancel"></i> Fermer</button>
+                            <button data-complaint="{{ $investigation->complaint }}" class="btn btn-primary btn-sm show-complaint"><i class="entypo-eye"></i> Voir la plainte</button>
+                            @if($investigation->status == 0)
+                                <button type="button" data-investigation="{{ $investigation->id }}" class="btn btn-red btn-sm close-investigation"><i class="entypo-cancel"></i> Fermer</button>
+                            @endif
                         </div>
                     </td>
                 </tr>
@@ -94,6 +96,45 @@
                         <button type="submit" class="btn btn-success"><i class="entypo-floppy"></i>Ouvrir</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- View complaint modal -->
+    <div class="modal fade" id="view_modal" style="display: none">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Plainte n°10203</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Plainte déposée par: </b><span id="complaint-author">N/A</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Plainte déposée contre: </b><span id="complaint-suspect">N/A</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Plainte déposée le: </b><span id="complaint-date">N/A</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Description de la plainte:</b><br>
+                            <p id="complaint-content">N/A</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="entypo-cancel"></i>Fermer</button>
+                </div>
             </div>
         </div>
     </div>
@@ -212,6 +253,48 @@
                     console.log(data);
                 }
             });
+        });
+
+        $('.show-complaint').click(function () {
+            const complaint = $(this)[0].dataset['complaint'];
+
+            $.ajax({
+                url: '/complaints/' + complaint,
+                method: 'GET',
+                success: function (data) {
+                    $('#complaint-author').empty().append(data.complaint.author.first_name + ' ' + data.complaint.author.last_name);
+                    $('#complaint-suspect').empty().append(data.complaint.suspect);
+                    $('#complaint-date').empty().append(data.complaint.date);
+                    $('#complaint-content').empty().append(data.complaint.description);
+                    $('#view_modal .modal-title').empty().append('Plainte n°' + data.complaint.id);
+
+                    $('#view_modal').modal('show');
+                },
+                error: function (data) {
+                    console.log(data);
+                    toastr.error("Une erreur est survenue. Impossible d'afficher la plainte.", 'Erreur');
+                }
+            });
+        });
+
+        $('.close-investigation').click(function () {
+            const investigation = $(this)[0].dataset['investigation'];
+
+            $.ajax({
+                url: '/investigations/' + investigation,
+                method: 'PUT',
+                data: { status: 1, _token: "{{ csrf_token() }}" },
+                success: function () {
+                    toastr.success("L'enquête a été fermée avec succès. Rendez-vous sur la page des plaintes pour ouvrir une nouvelle enquête.", 'Enquête fermeé');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                },
+                error: function (data) {
+                    console.log(data);
+                    toastr.error(data.responseJSON.message, 'Error');
+                }
+            })
         });
     </script>
 @stop
